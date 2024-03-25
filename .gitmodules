@@ -1,0 +1,3 @@
+[submodule "k8splay"]
+	path = k8splay
+	url = https://github.com/k8s-buddy/first-playground.git
