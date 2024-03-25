@@ -26,10 +26,18 @@ jobs:
           name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v3
         -
+          name: Set Date Time
+          id: datetime
+          run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
+
+        -
+
           name: Build and push
           uses: docker/build-push-action@v5
           with:
             context: .
             push: true
             # tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
-            tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.run_id }}-$(date '+%Y-%m-%d-%H-%M-%S') ## revised to update docker with latest date
+            tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ steps.datetime.outputs.date }}
+
+            # tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest, ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.run_id }}-$(date '+%Y-%m-%d-%H-%M-%S') ## revised to update docker with latest date
